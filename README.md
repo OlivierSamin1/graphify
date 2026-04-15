@@ -56,6 +56,50 @@ pip install graphifyy && graphify install
 
 > **Official package:** The PyPI package is named `graphifyy` (install with `pip install graphifyy`). Other packages named `graphify*` on PyPI are not affiliated with this project. The only official repository is [safishamsi/graphify](https://github.com/safishamsi/graphify). The CLI and skill command are still `graphify`.
 
+### Install from source (unreleased changes, Raspberry Pi, air-gapped)
+
+Use this when you cannot or do not want to use PyPI — for example you are on ARM (Raspberry Pi), you need a fork with local changes, or you are offline after copying the tree.
+
+1. **Get the code** on the machine: `git clone` your fork or copy the project directory (e.g. `rsync`, USB).
+2. **Create a virtual environment** (recommended):
+
+   ```bash
+   cd /path/to/graphify
+   python3 -m venv .venv
+   source .venv/bin/activate   # Windows: .venv\Scripts\activate
+   pip install -U pip setuptools wheel
+   ```
+
+3. **Build tools (if needed):** On some ARM or minimal systems, installing dependencies may compile native extensions. If `pip` fails to build wheels, install compiler headers first, e.g. on Debian/Ubuntu/Raspberry Pi OS:
+
+   ```bash
+   sudo apt update && sudo apt install -y python3-dev build-essential
+   ```
+
+4. **Install graphify from the repo:**
+
+   - **Editable** (code changes under `graphify/` take effect without reinstalling):
+
+     ```bash
+     pip install -e .
+     ```
+
+   - **Non-editable** (snapshot into the venv):
+
+     ```bash
+     pip install .
+     ```
+
+   Optional feature groups (install only what you need; `[all]` pulls PDF, video, watch, Neo4j, MCP, etc. and can be heavy on small boards):
+
+   ```bash
+   pip install -e ".[pdf,watch]"    # example
+   ```
+
+5. **Wire your assistant** the same way as with PyPI — for example `graphify install --platform cheetahclaws` or `graphify cheetahclaws install`, depending on your platform (see the tables below).
+
+The `graphify` CLI and bundled skill files (including platform-specific `.md` skills) come from this install; you do not need `pip install graphifyy` if you installed from the source tree.
+
 ### Platform support
 
 | Platform | Install command |
