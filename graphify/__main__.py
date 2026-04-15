@@ -77,6 +77,11 @@ _PLATFORM_CONFIG: dict[str, dict] = {
         "skill_dst": Path(".openclaw") / "skills" / "graphify" / "SKILL.md",
         "claude_md": False,
     },
+    "cheetahclaws": {
+        "skill_file": "skill-cheetahclaws.md",
+        "skill_dst": Path(".cheetahclaws") / "skills" / "graphify.md",
+        "claude_md": False,
+    },
     "droid": {
         "skill_file": "skill-droid.md",
         "skill_dst": Path(".factory") / "skills" / "graphify" / "SKILL.md",
@@ -821,7 +826,7 @@ def main() -> None:
         print("Usage: graphify <command>")
         print()
         print("Commands:")
-        print("  install [--platform P]  copy skill to platform config dir (claude|windows|codex|opencode|aider|claw|droid|trae|trae-cn|gemini|cursor|antigravity|hermes|kiro)")
+        print("  install [--platform P]  copy skill to platform config dir (claude|windows|codex|opencode|aider|claw|cheetahclaws|droid|trae|trae-cn|gemini|cursor|antigravity|hermes|kiro)")
         print("  path \"A\" \"B\"            shortest path between two nodes in graph.json")
         print("    --graph <path>          path to graph.json (default graphify-out/graph.json)")
         print("  explain \"X\"             plain-language explanation of a node and its neighbors")
@@ -863,6 +868,8 @@ def main() -> None:
         print("  copilot uninstall       remove graphify skill from ~/.copilot/skills")
         print("  claw install            write graphify section to AGENTS.md (OpenClaw)")
         print("  claw uninstall          remove graphify section from AGENTS.md")
+        print("  cheetahclaws install    write graphify section to AGENTS.md (CheetahClaws)")
+        print("  cheetahclaws uninstall  remove graphify section from AGENTS.md")
         print("  droid install           write graphify section to AGENTS.md (Factory Droid)")
         print("  droid uninstall        remove graphify section from AGENTS.md")
         print("  trae install            write graphify section to AGENTS.md (Trae)")
@@ -953,7 +960,7 @@ def main() -> None:
         else:
             print("Usage: graphify kiro [install|uninstall]", file=sys.stderr)
             sys.exit(1)
-    elif cmd in ("aider", "codex", "opencode", "claw", "droid", "trae", "trae-cn", "hermes"):
+    elif cmd in ("aider", "codex", "opencode", "claw", "cheetahclaws", "droid", "trae", "trae-cn", "hermes"):
         subcmd = sys.argv[2] if len(sys.argv) > 2 else ""
         if subcmd == "install":
             _agents_install(Path("."), cmd)

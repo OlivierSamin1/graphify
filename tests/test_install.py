@@ -42,6 +42,11 @@ def test_install_claw(tmp_path):
     assert (tmp_path / ".openclaw" / "skills" / "graphify" / "SKILL.md").exists()
 
 
+def test_install_cheetahclaws(tmp_path):
+    _install(tmp_path, "cheetahclaws")
+    assert (tmp_path / ".cheetahclaws" / "skills" / "graphify.md").exists()
+
+
 def test_install_droid(tmp_path):
     _install(tmp_path, "droid")
     assert (tmp_path / ".factory" / "skills" / "graphify" / "SKILL.md").exists()
@@ -90,11 +95,21 @@ def test_claw_skill_is_sequential():
     assert "@mention" not in skill
 
 
+def test_cheetahclaws_skill_is_sequential():
+    """CheetahClaws skill file must describe sequential extraction."""
+    import graphify
+    skill = (Path(graphify.__file__).parent / "skill-cheetahclaws.md").read_text()
+    assert "sequential" in skill.lower()
+    assert "spawn_agent" not in skill
+    assert "@mention" not in skill
+    assert "triggers:" in skill
+
+
 def test_all_skill_files_exist_in_package():
     """All installable platform skill files must be present in the installed package."""
     import graphify
     pkg = Path(graphify.__file__).parent
-    for name in ("skill.md", "skill-codex.md", "skill-opencode.md", "skill-claw.md", "skill-windows.md", "skill-droid.md", "skill-trae.md"):
+    for name in ("skill.md", "skill-codex.md", "skill-opencode.md", "skill-claw.md", "skill-cheetahclaws.md", "skill-windows.md", "skill-droid.md", "skill-trae.md"):
         assert (pkg / name).exists(), f"Missing: {name}"
 
 
@@ -136,6 +151,11 @@ def test_opencode_agents_install_writes_agents_md(tmp_path):
 
 def test_claw_agents_install_writes_agents_md(tmp_path):
     _agents_install(tmp_path, "claw")
+    assert (tmp_path / "AGENTS.md").exists()
+
+
+def test_cheetahclaws_agents_install_writes_agents_md(tmp_path):
+    _agents_install(tmp_path, "cheetahclaws")
     assert (tmp_path / "AGENTS.md").exists()
 
 
